@@ -25,11 +25,18 @@ public class OrderingSystemApplication {
         purchaseOrderService.createPurchaseOrder("Kamila");
         purchaseOrderService.addLineItem("mug", 2);
         purchaseOrderService.addLineItem("notebook", 1);
+        purchaseOrderService.addLineItem("scarf", 5);
 
         System.out.println("The total price is " + purchaseOrderService.processPO());
+
+        purchaseOrderService.createPurchaseOrder("Kamila");
+        purchaseOrderService.addLineItem("mug", 4);
+        purchaseOrderService.addLineItem("notebook", 7);
+        purchaseOrderService.addLineItem("scarf", 5);
+
+        System.out.println("The total price is " + purchaseOrderService.processPO());
+
         Salesperson salesperson = salespersonService.findSalespersonByName("Kamila");
         System.out.println(salesperson.getName() + "'s total sales were " + salespersonService.getTotalSales("Kamila"));
-
     }
-
 }

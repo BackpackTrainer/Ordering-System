@@ -33,6 +33,12 @@ public class Populator implements CommandLineRunner {
         p2.setQuantityOnHand(50);
         productService.save(p2);
 
+        Product p3 = new Product();
+        p3.setUnitPrice(6.0);
+        p3.setName("scarf");
+        p3.setQuantityOnHand(1);
+        productService.save(p3);
+
         Salesperson salesperson = new Salesperson();
         salesperson.setName("Kamila");
         salespersonService.save(salesperson);

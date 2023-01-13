@@ -7,7 +7,6 @@ import com.barclays.orderingsystem.model.Salesperson;
 import com.barclays.orderingsystem.repositories.ProductRepository;
 import com.barclays.orderingsystem.repositories.PurchaseOrderRepository;
 import com.barclays.orderingsystem.repositories.SalesPersonRepository;
-import com.barclays.orderingsystem.repositories.SalesPersonRepositoryImp;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,20 +38,21 @@ public class PurchaseOrderServiceImp implements PurchaseOrderService {
         return po;
     }
 
-
-
     @Override
     public void addLineItem(String productName, int quantity) {
         if(po == null) {
             po = new PurchaseOrder();
+            po.setSalesperson(null);
         }
         Product product = productRepository.getProductByName(productName);
-        LineItem li = new LineItem();
-        li.setQuantity(quantity);
-        li.setMyProduct(product);
-        li.setMyOrder(po);
-        po.addLineItem(li);
+        int salesQuantity = 0;
 
+        salesQuantity = product.getQuantityOnHand() >= quantity ?  quantity :  product.getQuantityOnHand();
+            LineItem li = new LineItem();
+            li.setQuantity(salesQuantity);
+            li.setMyProduct(product);
+            li.setMyOrder(po);
+            po.addLineItem(li);
     }
 
     @Override
@@ -75,5 +75,4 @@ public class PurchaseOrderServiceImp implements PurchaseOrderService {
        po = null;
        return totalPrice;
     }
-
 }
